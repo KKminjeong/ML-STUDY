@@ -15,7 +15,7 @@
 - network는 synthesized rain 이미지와 clean 이미지 쌍으로 학습되고, 이 학습이 실제 rain streaks 이미지에 transfer learning이 되어 학습이 된다.
   - 데이터 부족 문제와 supervised sample에 편향되는 문제를 모두 완화를 시킬 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c5de145a-51a0-4fcd-9e6b-733c97f5c96b/Untitled.png)
+![Untitled1](https://user-images.githubusercontent.com/86338750/162739230-3b4ecbc8-4cfb-4199-b3a9-36a19e98e2ae.png)
 
 ## 이전 방식들의 문제를 더 구체적으로 살펴보기
 
