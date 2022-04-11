@@ -23,13 +23,13 @@
 
   - 실제 비가 오는 시나리오에서 clean / rainy 이미지 쌍을 얻기 힘들기 때문에, 이전 방법들은 대체 방법으로 Photoshop으로 “Fake” rain streaks를 합성하는 방식을 채택했다.
 
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c51e4413-3f4e-4aca-8f62-abbc09537a28/Untitled.png)
+  ![Untitled2](https://user-images.githubusercontent.com/86338750/162739818-ad35bf89-e35e-44a3-8b7c-97c6fbc469a9.png)
 
   - 합성된 rainy 이미지는 (b)와 (c)에서 확인할 수 있다. ((a) 원본, (b)와 (c)는 합성된 이미지)
   - 합성 시 다양한 rain streaks 방향과 밀도를 적용했지만, 실제 rain streaks 이미지에서 더 다양한 범위의 패턴들을 포함하지 않는다.
 
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/53f464d4-9296-440e-96c7-9f1492242d90/Untitled.png)
-
+  ![Untitled3](https://user-images.githubusercontent.com/86338750/162739868-c92324bc-560b-4e58-8cfa-551eb5032f7a.png)
+  
   - (d)의 경우, rain streaks는 바람에 의해 영향을 받아 한 frame안에서 여러 방향을 가지고 있다.
   - (e)의 경우, rain streaks는 rain streaks와 카메라까지 거리가 다르기 때문에 multi-layer를 가진다.
   - (f)의 경우, rain streaks가 fog 또는 mist와 유사한 효과를 만들어낸다.
@@ -58,11 +58,11 @@
 
   - residual에 대한 domain 이해를 기반으로 설계된 파라미터화 시킨 분포에 부과된 likelihood 항을 통해 예상되는 clean image들 출력과 원래 노이즈가 있는 이미지(비가 내리는 이미지) 사이의 residual를 공식화한다.
 
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3dc9de63-bc7c-4778-b8c6-f4035c1b80ed/Untitled.png)
+  ![Untitled4](https://user-images.githubusercontent.com/86338750/162739876-8bd41152-dd90-4e79-b7e4-c042dc644680.png)
 
 - 논문에서 제안한 모델을 해결하기 위해 gradient descent strategy를 모으는 Expectation Maximization algorithm 설계
 
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/68ac3027-dedd-43cc-84fa-f2a704cfe0e1/Untitled.png)
+  ![Untitled5](https://user-images.githubusercontent.com/86338750/162739887-ffaca16a-d564-44ca-bacc-aea23ddd9868.png)
 
   - rain distribution parameter들과 network parameter들이 각 epoch에서는 sequence로 인해 최적화될 수 있다.
 
@@ -70,18 +70,18 @@
 
 ## Unsupervised data에 대한 공식
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/53f464d4-9296-440e-96c7-9f1492242d90/Untitled.png)
+![Untitled6](https://user-images.githubusercontent.com/86338750/162739894-e9bc226b-d78d-4d74-b230-94924563b2bc.png)
 
 - 그림 (d), (e), (f) → 실제 비는 합성된 비와 비교해서 상대적으로 더 복잡한 패턴과 표현을 가진다. 하지만 기술적인 문제로 실제 비의 label(clean image)는 만들 수 없다.
 - 실제 비 이미지에서부터 clean background 뿐만 아니라 rain layer를 힘들고 어렵게 추출할 수는 있지만, real rainy image의 stochastic configuration들을 적절하게 근사화하는 parameterized distribution을 설계한다.
 - 비는 카메라에서 다른 거리 위치에서 발생해서 일반적으로 multi-model structure들을 포함하기 때문에, Gaussian Mixture Model로 비를 근사하게 표현할 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/30f1850f-f159-48d8-bf67-502be631cce9/Untitled.png)
+![Untitled7](https://user-images.githubusercontent.com/86338750/162739902-bc9c4de0-1794-4124-99e6-d4d7ce4e16f5.png)
 
 - Mixture model들은 parameter들이 적절히 학습되어 있다면, 어떤 Continuous function으로도 균일한 근사화가 가능하다, 그러므로 Mixture model은 input rainy image에서부터 뽑아내는 rain streake들을 묘사하는데 적절히 활용된다.
 - 이 Unsupervised sample들에 부과된 negative log likelihood function은 다음과 같이 쓸 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8633a19c-8916-444b-a22c-4af56060f8f4/Untitled.png)
+![Untitled8](https://user-images.githubusercontent.com/86338750/162739913-e57f3810-ae9e-41d2-b0cd-569a3d470cb0.png)
 
 - 위의 encoding 방법을 활용함으로써, Unsupervised rainy image들에 대한 objective function을 구성할 수 있다. 이는 더 나아가 objective function의 gradient들을 network layer들로 back-propagating하는 것을 통해 network parameter들을 fine-tune하기 위해 사용될 수 있다.
 
@@ -90,7 +90,7 @@
 - supervised sample들에 대한 loss function을 공식화하기 위해 **DerainNet(deep convolutional neural network)**의 **network structure**와 **negative residual mapping skill(?)**을 따른다. $f_ω (ㆍ)$로 정의되는 DerainNet(w → network parameters)는 input image의 rain streaks를 제거하고 rain-free image를 출력한다고 가정한다.
 - 일반적인 CNN의 loss function은 derain output으로 기대되는 $f_ω (x_i )$와 ground truth label $y_i$사이의 least square loss를 최소화 시킨다. 즉, supervised sample들에 부과되는 loss function은 다음과 같다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/09ad9086-d325-4b72-a597-a3a6b54ec90b/Untitled.png)
+![Untitled9](https://user-images.githubusercontent.com/86338750/162739925-8fa2edb0-d9b4-4244-b013-e60966f63a63.png)
 
 ## KL-Divergence
 
@@ -98,7 +98,7 @@
 - 이 제약 조건을 추가함으로써 논문의 모델이 합성된 비에서 임의의 영역이 아닌 실제 비로 transfer될 것으로 예상하고 있다.
 - 이 KL-Divergence는 분석적으로 다루기 어렵기 때문에  $G_{syn}$와 $GMM_{real}$의 각 구성 요소 사이의 KL-Divergence의 최소 값을 실제 샘플에서 학습한 GMM의 하나 이상의 구성 요소가 비와 유사하도록 경험적이고 간단한 대체물로 사용한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3db8dbbf-a4b8-41f3-a04d-e9bd53c0a6ce/Untitled.png)
+![Untitled10](https://user-images.githubusercontent.com/86338750/162739932-128f4862-70c4-46f4-b7b0-b9cd34857d5f.png)
 
 ## Total Variation Regularizer
 
@@ -110,7 +110,7 @@
 
   - 이는 해당 clean image에 대한 특정 명시적 지침 없이도 unsupervised data의 network training에 대한 gradient descent에 대해 올바른 방향으로 갈 수 있도록 해준다.
 
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b68059d2-8359-4a9e-905c-8e2fdd992123/Untitled.png)
+![Untitled11](https://user-images.githubusercontent.com/86338750/162739938-32435aa4-5f88-4927-bc60-49a972b93132.png)
 
 - 이 objective function의 마지막 항을 통해, unsupervised data는 supervised data에 부과된 같은 network에 공급될 수 있고,  ${\tilde{x}}_n-f_w(\tilde{x})_n$는 실제 비 이미지에서 추출된 예상되는 비이다.(이는 Unsupervised data에 대한 공식에서 정리한 $R_n$과 동일)
 
