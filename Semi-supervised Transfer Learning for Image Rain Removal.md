@@ -42,7 +42,7 @@
   - 하지만 clean 이미지 없이 진짜 비가 오는 이미지는 쉽게 많이 얻을 수 있다.
     - Semi-supervised learning을 채택한 이유 중 하나
 
-## 위 문제들을 해결하려고 논문 저자들이 시도한 방법
+## 위 문제들을 해결하기 위해 시도해 볼 수 있는 방법들
 
 - supervised dataset을 더 모으는 것 대신에, unsupervised input으로 overfitting문제를 방지할 수 있다.
 
@@ -94,9 +94,9 @@
 
 ## KL-Divergence
 
-- GMM은 모든 continuous distribution에 적용할 수 있기 때문에, **real rain sample들에 더 잘 맞도록 하기 위해서 Synthesized rain data 영역과 real rain data 영역 사이의 불일치가 너무 크지 않도록** 합성 비에서 학습한 **Gaussian $G_{syn}$** 와 훈련 중 small controlling parameter를 가지고 실제 비에서 학습한 **Gaussian들의 혼합 $GMM_{real}$** **사이의 Kullback-Leibler divergence를 최소화 시킴으로써 제약 조건을 추가**한다.
+- GMM은 모든 continuous distribution에 적용할 수 있기 때문에, **real rain sample들에 더 잘 맞도록 하기 위해서 Synthesized rain data 영역과 real rain data 영역 사이의 불일치가 너무 크지 않도록** 합성 비에서 학습한 훈련 중 small controlling parameter를 가지고 실제 비에서 학습한 **Gaussian들의 Kullback-Leibler divergence를 최소화 시킴으로써 제약 조건을 추가**한다.
 - 이 제약 조건을 추가함으로써 논문의 모델이 합성된 비에서 임의의 영역이 아닌 실제 비로 transfer될 것으로 예상하고 있다.
-- 이 KL-Divergence는 분석적으로 다루기 어렵기 때문에  $G_{syn}$와 $GMM_{real}$의 각 구성 요소 사이의 KL-Divergence의 최소 값을 실제 샘플에서 학습한 GMM의 하나 이상의 구성 요소가 비와 유사하도록 경험적이고 간단한 대체물로 사용한다.
+- 이 KL-Divergence는 분석적으로 다루기 어렵기 때문에 각 구성 요소 사이의 KL-Divergence의 최소 값을 실제 샘플에서 학습한 GMM의 하나 이상의 구성 요소가 비와 유사하도록 경험적이고 간단한 대체물로 사용한다.
 
 ![Untitled10](https://user-images.githubusercontent.com/86338750/162739932-128f4862-70c4-46f4-b7b0-b9cd34857d5f.png)
 
@@ -112,7 +112,7 @@
 
 ![Untitled11](https://user-images.githubusercontent.com/86338750/162739938-32435aa4-5f88-4927-bc60-49a972b93132.png)
 
-- 이 objective function의 마지막 항을 통해, unsupervised data는 supervised data에 부과된 같은 network에 공급될 수 있고,  ${\tilde{x}}_n-f_w(\tilde{x})_n$는 실제 비 이미지에서 추출된 예상되는 비이다.(이는 Unsupervised data에 대한 공식에서 정리한 $R_n$과 동일)
+- 이 objective function의 마지막 항을 통해, unsupervised data는 supervised data에 부과된 같은 network에 공급될 수 있다.
 
 - α, β, λ가 0이면 논문의 model은 원래의 supervised deep learning model이 된다.
 
